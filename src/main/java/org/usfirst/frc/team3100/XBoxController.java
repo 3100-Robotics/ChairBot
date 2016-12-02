@@ -19,6 +19,8 @@ public class XBoxController extends Joystick{
     private static final int rightTrigger = 2;
     private static final int leftTrigger = 3;
 
+    private static final int dPad = 0;
+
     public XBoxController(int port) {
         super(port);
     }
@@ -54,6 +56,8 @@ public class XBoxController extends Joystick{
     public boolean getButtonY() {
         return getRawButton(yButton);
     }
+
+    public int getDPad() { return getPOV(dPad); }
 
     public boolean getRightBumper() {
         return getRawButton(rightBumper);
