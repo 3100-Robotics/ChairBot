@@ -2,76 +2,74 @@ package org.usfirst.frc.team3100;
 
 import edu.wpi.first.wpilibj.Joystick;
 
-public class XBoxController extends Joystick{
-    private static final int rightXAxis = 4;
-    private static final int rightYAxis = 5;
-    private static final int leftXAxis = 0;
-    private static final int leftYAxis = 1;
+public class XBoxController extends Joystick {
 
-    private static final int aButton = 1;
-    private static final int bButton = 2;
-    private static final int xButton = 3;
-    private static final int yButton = 4;
+        public static final int rightXAxis = 4;
+        public static final int rightYAxis = 5;
+        public static final int leftXAxis = 0;
+        public static final int leftYAxis = 1;
 
-    private static final int rightBumper = 6;
-    private static final int leftBumper = 5;
+        public static final int aButton = 1;
+        public static final int bButton = 2;
+        public static final int xButton = 3;
+        public static final int yButton = 4;
 
-    private static final int rightTrigger = 2;
-    private static final int leftTrigger = 3;
+        public static final int rightBumper = 6;
+        public static final int leftBumper = 5;
 
-    private static final int dPad = 0;
+        public static final int rightTrigger = 2;
+        public static final int leftTrigger = 3;
 
-    public XBoxController(int port) {
-        super(port);
-    }
+        public XBoxController(int port) {
+            super(port);
+        }
 
-    public double getRightStickX() {
-        return getRawAxis(rightXAxis);
-    }
+        public double getRightStickX() {
+            return getRawAxis(rightXAxis);
+        }
 
-    public double getRightStickY() {
-        return getRawAxis(rightYAxis);
-    }
+        public double getRightStickY() {
+            return getRawAxis(rightYAxis);
+        }
 
-    public double getLeftStickX() {
-        return getRawAxis(leftXAxis);
-    }
+        public double getLeftStickX() {
+            return getRawAxis(leftXAxis);
+        }
 
-    public double getLeftStickY() {
-        return getRawAxis(leftYAxis);
-    }
+        public double getLeftStickY() {
+            return getRawAxis(leftYAxis);
+        }
 
-    public boolean getButtonA() {
-        return getRawButton(aButton);
-    }
+        public boolean getButtonA() {
+            return getRawButton(aButton);
+        }
 
-    public boolean getButtonB() {
-        return getRawButton(bButton);
-    }
+        public boolean getButtonB() {
+            return getRawButton(bButton);
+        }
 
-    public boolean getButtonX() {
-        return getRawButton(xButton);
-    }
+        public boolean getButtonX() {
+            return getRawButton(xButton);
+        }
 
-    public boolean getButtonY() {
-        return getRawButton(yButton);
-    }
+        public boolean getButtonY() {
+            return getRawButton(yButton);
+        }
 
-    public int getDPad() { return getPOV(dPad); }
+        public boolean getRightBumper() {
+            return getRawButton(rightBumper);
+        }
 
-    public boolean getRightBumper() {
-        return getRawButton(rightBumper);
-    }
+        public boolean getLeftBumper() {
+            return getRawButton(leftBumper);
+        }
 
-    public boolean getLeftBumper() {
-        return getRawButton(leftBumper);
-    }
+        public double getRightTrigger() {
+            return getRawAxis(rightTrigger);
+        }
 
-    public double getRightTrigger() {
-        return getRawAxis(rightTrigger);
-    }
+        public double getLeftTrigger() {
+            return getRawAxis(leftTrigger);
 
-    public double getLeftTrigger() {
-        return getRawAxis(leftTrigger);
     }
 }
