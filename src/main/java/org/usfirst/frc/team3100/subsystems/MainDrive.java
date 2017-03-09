@@ -12,6 +12,7 @@ import java.lang.Math;
 /**
  * Created by nicco on 2/14/17.
  */
+
 public class MainDrive extends PIDSubsystem {
 
     private SpeedController leftMotor = RobotMap.leftMotor;
@@ -43,7 +44,7 @@ public class MainDrive extends PIDSubsystem {
     public MainDrive(){
 
 
-        super("MainDrive", 0.25,0,0);
+        super("MainDrive", 0,0,0);
         setOutputRange(-1,1);
         getPIDController().setContinuous();
         enable();
@@ -65,10 +66,11 @@ public class MainDrive extends PIDSubsystem {
 
     protected void usePIDOutput(double output) {
         SmartDashboard.putNumber("PID Output", output);
-        mainDrive.arcadeDrive(targetMove, -output);
+        mainDrive.arcadeDrive(targetMove, -targetRotate);
     }
     public void drive(double move, double rotate) {
         targetMove = move;
+        targetRotate = rotate;
         setSetpoint(setHeading(move, rotate));
 
         enable();

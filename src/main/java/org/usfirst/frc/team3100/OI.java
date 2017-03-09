@@ -17,7 +17,9 @@ import static org.usfirst.frc.team3100.RobotMap.controls;
 
 
     public class OI {
-
+    private XBoxController controller = RobotMap.controls;
+    private Button shootButton = new JoystickButton(controller, XBoxController.leftBumper);
+    public boolean shootState = true;
         public double getDriveMoveSpeed() {
             return controls.getLeftStickY();
         }
@@ -27,7 +29,7 @@ import static org.usfirst.frc.team3100.RobotMap.controls;
             return controls.getRightTrigger();
         }
         public OI() {
-
+            shootButton.whenPressed(new Shoot());
         }
 
 
