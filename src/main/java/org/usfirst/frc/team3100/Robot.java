@@ -12,17 +12,17 @@ public class Robot extends IterativeRobot{
 
     public static MainDrive drive;
     public static Shooter shooter;
-    CameraServer server;
+    //CameraServer server;
     public NetworkTable table;
     public static OI oi;
-    private static ZMultiCamera camera = new ZMultiCamera("cam0", "cam5");
+    //private static ZMultiCamera camera = new ZMultiCamera("cam0", "cam5");
     private static NetworkTable networkTable;
 
 
     public void robotInit() {
-        server = CameraServer.getInstance();
-        server.startAutomaticCapture();
-        camera.start();
+        //server = CameraServer.getInstance();
+        //server.startAutomaticCapture();
+        //camera.start();
         table = NetworkTable.getTable("Test table");
         RobotMap.gyro.calibrate();
         Timer.delay(5);
@@ -52,12 +52,12 @@ public class Robot extends IterativeRobot{
     public void testPeriodic() {
 
     }
-    public static ZMultiCamera getCamera() {
-        return camera;
-    }
-    public static NetworkTable getNetworkTable() {
-        return networkTable;
-    }
+    //public static ZMultiCamera getCamera() {
+    //    return camera;
+    //}
+    //public static NetworkTable getNetworkTable() {
+    //    return networkTable;
+    //}
 
 
 }
