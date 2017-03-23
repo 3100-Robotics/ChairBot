@@ -5,7 +5,9 @@ import edu.wpi.first.wpilibj.Jaguar;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team3100.RobotMap;
+import sun.nio.ch.Net;
 
 
 public class Shooter extends Subsystem {
@@ -15,6 +17,7 @@ public class Shooter extends Subsystem {
     private static Jaguar shooterMotor = RobotMap.shootMotor;
     private static Jaguar tankCycle = RobotMap.tankCycle;
     private Encoder rotSpeed = RobotMap.shootCheck;
+
 
 
 
@@ -34,6 +37,11 @@ public class Shooter extends Subsystem {
         shooterMotor.set(0);
         ballFeeder.set(0);
         tankCycle.set(0);
+    }
+
+    public void autoShooting() {
+
+
     }
 
 }

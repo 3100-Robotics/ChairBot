@@ -28,16 +28,12 @@ public class MainDrive extends PIDSubsystem {
     static double setting = 0.0; //Need to remember the value instead of 0
 
     private double setHeading(double move, double rotate){
-
-
-
         if((Math.abs(move) < JOYSTIC_EPSILON) && (Math.abs(rotate) < JOYSTIC_EPSILON)){
             setting = gyro.getAngle();
         } else if (Math.abs(rotate) >= JOYSTIC_EPSILON) {
             setting = (setting + (rotate * ROTATE_COEFF));
         }
         return setting;
-
     }
 
 

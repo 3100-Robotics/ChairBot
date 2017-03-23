@@ -26,7 +26,7 @@ public class ZMultiCamera implements Runnable{
 
     public ZMultiCamera(String cameraName1, String cameraName2) {
         camera1 = NIVision.IMAQdxOpenCamera(cameraName1, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
-        camera2 = NIVision.IMAQdxOpenCamera(cameraName2, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
+        //camera2 = NIVision.IMAQdxOpenCamera(cameraName2, NIVision.IMAQdxCameraControlMode.CameraControlModeController);
 
         lastFrame = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 
@@ -53,6 +53,7 @@ public class ZMultiCamera implements Runnable{
 
 
     public void start(){
+        cameraServer = CameraServer.getInstance();
         running = true;
         cameraThread.start();
     }

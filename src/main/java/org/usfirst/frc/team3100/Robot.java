@@ -12,21 +12,24 @@ public class Robot extends IterativeRobot{
 
     public static MainDrive drive;
     public static Shooter shooter;
-    //CameraServer server;
+    CameraServer server;
     public NetworkTable table;
     public static OI oi;
-    //private static ZMultiCamera camera = new ZMultiCamera("cam0", "cam5");
+    private static ZMultiCamera camera = new ZMultiCamera("cam0", "cam5");
     private static NetworkTable networkTable;
+    public static boolean autoVal;
+    public float driveTest;
 
 
     public void robotInit() {
-        //server = CameraServer.getInstance();
-        //server.startAutomaticCapture();
-        //camera.start();
+//        server = CameraServer.getInstance();
+//        server.startAutomaticCapture();
+        camera.start();
         table = NetworkTable.getTable("Test table");
         RobotMap.gyro.calibrate();
         Timer.delay(5);
         networkTable = NetworkTable.getTable("3t");
+        driveTest = 0;
 
         shooter = new Shooter();
         drive = new MainDrive();
@@ -36,7 +39,7 @@ public class Robot extends IterativeRobot{
 
 
     public void autonomousInit() {
-
+        autoVal = true;
     }
 
     public void autonomousPeriodic() {
@@ -44,6 +47,7 @@ public class Robot extends IterativeRobot{
     }
 
     public void teleopPeriodic() {
+        autoVal = false;
         table.putNumber("test", oi.getDriveMoveSpeed());
 
         Scheduler.getInstance().run();
