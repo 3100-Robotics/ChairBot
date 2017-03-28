@@ -6,9 +6,6 @@ import org.usfirst.frc.team3100.RobotMap;
 import org.usfirst.frc.team3100.XBoxController;
 import org.usfirst.frc.team3100.subsystems.MainDrive;
 
-/**
- * Created by nicco on 2/15/17.
- */
 public class Drive extends Command {
 
 

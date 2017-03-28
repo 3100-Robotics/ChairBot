@@ -1,5 +1,6 @@
 package org.usfirst.frc.team3100.commands;
 
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import org.usfirst.frc.team3100.Robot;
 import org.usfirst.frc.team3100.RobotMap;
@@ -29,9 +30,7 @@ public class Auto extends Command {
 
     @Override
     protected void execute() {
-        drive.drive(controller.getLeftStickY(), controller.getRightStickX());
-
-
+        shooter.shoot();
     }
 
 
@@ -42,7 +41,6 @@ public class Auto extends Command {
 
     protected void interrupted(){
         drive.drive(0, 0);
-        shooter.
     }
 
     @Override
@@ -50,4 +48,4 @@ public class Auto extends Command {
 
     }
 }
-}
+

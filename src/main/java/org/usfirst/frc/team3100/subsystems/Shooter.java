@@ -38,10 +38,4 @@ public class Shooter extends Subsystem {
         ballFeeder.set(0);
         tankCycle.set(0);
     }
-
-    public void autoShooting() {
-
-
-    }
-
 }

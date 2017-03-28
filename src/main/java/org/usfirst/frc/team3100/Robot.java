@@ -2,9 +2,11 @@ package org.usfirst.frc.team3100;
 
     import edu.wpi.first.wpilibj.*;
     import edu.wpi.first.wpilibj.IterativeRobot;
+    import edu.wpi.first.wpilibj.command.Command;
     import edu.wpi.first.wpilibj.command.Scheduler;
     import edu.wpi.first.wpilibj.networktables.NetworkTable;
     import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+    import org.usfirst.frc.team3100.commands.Auto;
     import org.usfirst.frc.team3100.subsystems.MainDrive;
     import org.usfirst.frc.team3100.subsystems.Shooter;
 
@@ -19,6 +21,7 @@ public class Robot extends IterativeRobot{
     private static NetworkTable networkTable;
     public static boolean autoVal;
     public float driveTest;
+    Command autonomousCommand;
 
 
     public void robotInit() {
@@ -30,7 +33,6 @@ public class Robot extends IterativeRobot{
         Timer.delay(5);
         networkTable = NetworkTable.getTable("3t");
         driveTest = 0;
-
         shooter = new Shooter();
         drive = new MainDrive();
         SmartDashboard.putData("MainDrive", drive);
@@ -40,6 +42,8 @@ public class Robot extends IterativeRobot{
 
     public void autonomousInit() {
         autoVal = true;
+        if(shooter != null) shooter.shoot();
+
     }
 
     public void autonomousPeriodic() {
@@ -56,12 +60,10 @@ public class Robot extends IterativeRobot{
     public void testPeriodic() {
 
     }
-    //public static ZMultiCamera getCamera() {
-    //    return camera;
-    //}
-    //public static NetworkTable getNetworkTable() {
-    //    return networkTable;
-    //}
+
+    public static NetworkTable getNetworkTable() {
+        return networkTable;
+    }
 
 
 }
