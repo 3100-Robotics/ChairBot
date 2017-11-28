@@ -19,17 +19,25 @@ import static org.usfirst.frc.team3100.RobotMap.controls;
     public class OI {
     private XBoxController controller = RobotMap.controls;
     private Button shootButton = new JoystickButton(controller, XBoxController.leftBumper);
+    private Button camAddButton = new JoystickButton(controller, XBoxController.aButton);
+    private Button camStartButton = new JoystickButton(controller, XBoxController.bButton);
+
     public boolean shootState = true;
         public double getDriveMoveSpeed() {
             return controls.getLeftStickY();
         }
-        public double getRotateSpeed() {return controls.getRightStickX();
+
+
+
+    public double getRotateSpeed() {return controls.getRightStickX();
         }
         public double getModifier() {
             return controls.getRightTrigger();
         }
         public OI() {
             shootButton.whenPressed(new Shoot());
+            camAddButton.whenPressed(new Cam());
+
         }
 
 

@@ -14,8 +14,7 @@ public class Shoot extends Command {
         if(Robot.oi.shootState && !Robot.autoVal){
             Robot.shooter.shoot();
             Robot.oi.shootState = false;
-        }
-        if(Robot.oi.shootState == false) {
+        } else {
             Robot.shooter.stopShooting();
             Robot.oi.shootState = true;
         }

@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import org.usfirst.frc.team3100.RobotMap;
-import sun.nio.ch.Net;
 
 
 public class Shooter extends Subsystem {
@@ -27,7 +26,7 @@ public class Shooter extends Subsystem {
 
 
     public void shoot() {
-        shooterMotor.set(-0.80);
+        shooterMotor.set(1);
         Timer.delay(3.5);
         ballFeeder.set(-1);
         tankCycle.set(1);

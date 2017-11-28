@@ -44,10 +44,10 @@ public class MainDrive extends PIDSubsystem {
         setOutputRange(-1,1);
         getPIDController().setContinuous();
         enable();
-        SmartDashboard.putNumber("P", getPIDController().getP());
-        SmartDashboard.putNumber("I", getPIDController().getI());
-        SmartDashboard.putNumber("D", getPIDController().getD());
-        SmartDashboard.putNumber("SetPoint", getSetpoint());
+        //SmartDashboard.putNumber("P", getPIDController().getP());
+        //SmartDashboard.putNumber("I", getPIDController().getI());
+        //SmartDashboard.putNumber("D", getPIDController().getD());
+        //SmartDashboard.putNumber("SetPoint", getSetpoint());
     }
 
     @Override
@@ -63,22 +63,22 @@ public class MainDrive extends PIDSubsystem {
 
     protected void usePIDOutput(double output) {
         SmartDashboard.putNumber("PID Output", output);
-        mainDrive.arcadeDrive(targetMove, -targetRotate);
+        mainDrive.arcadeDrive(targetMove * -1, -targetRotate);
     }
-    public void drive(double move, double rotate) {
+    public void drive(double move , double rotate) {
         targetMove = move;
         targetRotate = rotate;
-        setSetpoint(setHeading(move, rotate));
+        setSetpoint(setHeading(move , rotate));
 
         enable();
 
-        if (DEBUG) {
-            getPIDController().setPID(
-                SmartDashboard.getNumber("P"),
-                SmartDashboard.getNumber("I"),
-                SmartDashboard.getNumber("D")
-            );
-        }
+        //if (DEBUG) {
+        //    getPIDController().setPID(
+                //SmartDashboard.getNumber("P"),
+                //SmartDashboard.getNumber("I"),
+                //SmartDashboard.getNumber("D")
+        //    );
+        //}
         SmartDashboard.putNumber("P", getPIDController().getP());
         SmartDashboard.putNumber("I", getPIDController().getI());
         SmartDashboard.putNumber("D", getPIDController().getD());

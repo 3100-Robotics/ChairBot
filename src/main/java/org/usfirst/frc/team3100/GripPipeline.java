@@ -1,5 +1,5 @@
 package org.usfirst.frc.team3100;
-/*
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -9,8 +9,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.HashMap;
 
-import com.ni.vision.NIVision;
-import edu.wpi.first.wpilibj.vision.*;
+import edu.wpi.first.wpilibj.vision.VisionPipeline;
 
 import org.opencv.core.*;
 import org.opencv.core.Core.*;
@@ -18,7 +17,7 @@ import org.opencv.features2d.FeatureDetector;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.*;
 import org.opencv.objdetect.*;
-*/
+
 /**
 * GripPipeline class.
 *
@@ -26,11 +25,10 @@ import org.opencv.objdetect.*;
 *
 * @author GRIP
 */
-public class GripPipeline {
-// implements VisionPipeline
+public class GripPipeline implements VisionPipeline {
+
 	//Outputs
-	/*private Mat hslThresholdOutput = new Mat();
-	private Mat cvErodeOutput = new Mat();
+	private Mat hslThresholdOutput = new Mat();
 	private ArrayList<MatOfPoint> findContoursOutput = new ArrayList<MatOfPoint>();
 	private ArrayList<MatOfPoint> filterContoursOutput = new ArrayList<MatOfPoint>();
 
@@ -38,68 +36,72 @@ public class GripPipeline {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 	}
 
-
-	//@Override
-	public void process(Mat source0) {
+	/**
+	 * This is the primary method that runs the entire pipeline and updates the outputs.
+	 */
+	@Override	public void process(Mat source0) {
 		// Step HSL_Threshold0:
 		Mat hslThresholdInput = source0;
-		double[] hslThresholdHue = {0.0, 99.01528013582343};
-		double[] hslThresholdSaturation = {142.17625899280574, 255.0};
-		double[] hslThresholdLuminance = {27.51798561151079, 168.4125636672326};
+		double[] hslThresholdHue = {66.36690647482014, 124.99151103565364};
+		double[] hslThresholdSaturation = {36.690647482014384, 194.38879456706283};
+		double[] hslThresholdLuminance = {75.67446043165468, 240.44754858252617};
 		hslThreshold(hslThresholdInput, hslThresholdHue, hslThresholdSaturation, hslThresholdLuminance, hslThresholdOutput);
 
-		// Step CV_erode0:
-		Mat cvErodeSrc = hslThresholdOutput;
-		Mat cvErodeKernel = new Mat();
-		org.opencv.core.Point cvErodeAnchor = new org.opencv.core.Point(-1, -1);
-		double cvErodeIterations = 1.0;
-		int cvErodeBordertype = Core.BORDER_CONSTANT;
-		Scalar cvErodeBordervalue = new Scalar(-1);
-		cvErode(cvErodeSrc, cvErodeKernel, cvErodeAnchor, cvErodeIterations, cvErodeBordertype, cvErodeBordervalue, cvErodeOutput);
-
 		// Step Find_Contours0:
-		Mat findContoursInput = cvErodeOutput;
+		Mat findContoursInput = hslThresholdOutput;
 		boolean findContoursExternalOnly = false;
 		findContours(findContoursInput, findContoursExternalOnly, findContoursOutput);
 
 		// Step Filter_Contours0:
 		ArrayList<MatOfPoint> filterContoursContours = findContoursOutput;
-		double filterContoursMinArea = 10.0;
-		double filterContoursMinPerimeter = 0.0;
-		double filterContoursMinWidth = 0.0;
-		double filterContoursMaxWidth = 1000.0;
-		double filterContoursMinHeight = 0.0;
-		double filterContoursMaxHeight = 1000.0;
+		double filterContoursMinArea = 1000.0;
+		double filterContoursMinPerimeter = 0;
+		double filterContoursMinWidth = 0;
+		double filterContoursMaxWidth = 1000;
+		double filterContoursMinHeight = 0;
+		double filterContoursMaxHeight = 1000;
 		double[] filterContoursSolidity = {0, 100};
-		double filterContoursMaxVertices = 1000000.0;
-		double filterContoursMinVertices = 0.0;
-		double filterContoursMinRatio = 0.0;
-		double filterContoursMaxRatio = 1000.0;
+		double filterContoursMaxVertices = 1000000;
+		double filterContoursMinVertices = 0;
+		double filterContoursMinRatio = 0;
+		double filterContoursMaxRatio = 1000;
 		filterContours(filterContoursContours, filterContoursMinArea, filterContoursMinPerimeter, filterContoursMinWidth, filterContoursMaxWidth, filterContoursMinHeight, filterContoursMaxHeight, filterContoursSolidity, filterContoursMaxVertices, filterContoursMinVertices, filterContoursMinRatio, filterContoursMaxRatio, filterContoursOutput);
 
 	}
 
-
+	/**
+	 * This method is a generated getter for the output of a HSL_Threshold.
+	 * @return Mat output from HSL_Threshold.
+	 */
 	public Mat hslThresholdOutput() {
 		return hslThresholdOutput;
 	}
 
-
-	public Mat cvErodeOutput() {
-		return cvErodeOutput;
-	}
-
-
+	/**
+	 * This method is a generated getter for the output of a Find_Contours.
+	 * @return ArrayList<MatOfPoint> output from Find_Contours.
+	 */
 	public ArrayList<MatOfPoint> findContoursOutput() {
 		return findContoursOutput;
 	}
 
-
+	/**
+	 * This method is a generated getter for the output of a Filter_Contours.
+	 * @return ArrayList<MatOfPoint> output from Filter_Contours.
+	 */
 	public ArrayList<MatOfPoint> filterContoursOutput() {
 		return filterContoursOutput;
 	}
 
 
+	/**
+	 * Segment an image based on hue, saturation, and luminance ranges.
+	 *
+	 * @param input The image on which to perform the HSL threshold.
+	 * @param hue The min and max hue
+	 * @param sat The min and max saturation
+	 * @param lum The min and max luminance
+	 */
 	private void hslThreshold(Mat input, double[] hue, double[] sat, double[] lum,
 		Mat out) {
 		Imgproc.cvtColor(input, out, Imgproc.COLOR_BGR2HLS);
@@ -107,22 +109,10 @@ public class GripPipeline {
 			new Scalar(hue[1], lum[1], sat[1]), out);
 	}
 
-
-	private void cvErode(Mat src, Mat kernel, Point anchor, double iterations,
-		int borderType, Scalar borderValue, Mat dst) {
-		if (kernel == null) {
-			kernel = new Mat();
-		}
-		if (anchor == null) {
-			anchor = new Point(-1,-1);
-		}
-		if (borderValue == null) {
-			borderValue = new Scalar(-1);
-		}
-		Imgproc.erode(src, dst, kernel, anchor, (int)iterations, borderType, borderValue);
-	}
-
-
+	/**
+	 * Sets the values of pixels in a binary image to their distance to the nearest black pixel.
+	 * @param input The image on which to perform the Distance Transform.
+	 */
 	private void findContours(Mat input, boolean externalOnly,
 		List<MatOfPoint> contours) {
 		Mat hierarchy = new Mat();
@@ -139,7 +129,21 @@ public class GripPipeline {
 	}
 
 
-
+	/**
+	 * Filters out contours that do not meet certain criteria.
+	 * @param inputContours is the input list of contours
+	 * @param output is the the output list of contours
+	 * @param minArea is the minimum area of a contour that will be kept
+	 * @param minPerimeter is the minimum perimeter of a contour that will be kept
+	 * @param minWidth minimum width of a contour
+	 * @param maxWidth maximum width
+	 * @param minHeight minimum height
+	 * @param maxHeight maximimum height
+	 * @param minVertexCount minimum vertex Count of the contours
+	 * @param maxVertexCount maximum vertex Count
+	 * @param minRatio minimum ratio of width to height
+	 * @param maxRatio maximum ratio of width to height
+	 */
 	private void filterContours(List<MatOfPoint> inputContours, double minArea,
 		double minPerimeter, double minWidth, double maxWidth, double minHeight, double
 		maxHeight, double[] solidity, double maxVertexCount, double minVertexCount, double
@@ -147,11 +151,15 @@ public class GripPipeline {
 		final MatOfInt hull = new MatOfInt();
 		output.clear();
 		//operation
+		//for each object inputted
 		for (int i = 0; i < inputContours.size(); i++) {
+
 			final MatOfPoint contour = inputContours.get(i);
 			final Rect bb = Imgproc.boundingRect(contour);
+			//creating a rectangle bb with the contour
 			if (bb.width < minWidth || bb.width > maxWidth) continue;
 			if (bb.height < minHeight || bb.height > maxHeight) continue;
+			//sets area or rectangle to double area
 			final double area = Imgproc.contourArea(contour);
 			if (area < minArea) continue;
 			if (Imgproc.arcLength(new MatOfPoint2f(contour.toArray()), true) < minPerimeter) continue;
@@ -171,7 +179,7 @@ public class GripPipeline {
 			output.add(contour);
 		}
 	}
-*/
+
 
 
 
