@@ -12,8 +12,6 @@ package org.usfirst.frc.team3100;
     import org.opencv.core.Rect;
     import org.opencv.imgproc.Imgproc;
     import org.usfirst.frc.team3100.commands.Auto;
-    import org.usfirst.frc.team3100.commands.Cam;
-    import org.usfirst.frc.team3100.subsystems.CameraMotion;
     import org.usfirst.frc.team3100.subsystems.MainDrive;
     import org.usfirst.frc.team3100.subsystems.Shooter;
     import edu.wpi.first.wpilibj.CameraServer;
@@ -30,12 +28,11 @@ public class Robot extends IterativeRobot{
 
     public static MainDrive drive;
     public static Shooter shooter;
-    public static CameraMotion camera;
+
     //public CameraServer server;
     public NetworkTable table;
     public static OI oi;
     private static NetworkTable networkTable;
-    public static GripPipeline processor;
     public static boolean autoVal;
     public float driveTest;
 
@@ -48,7 +45,6 @@ public class Robot extends IterativeRobot{
     private final Object imgLock = new Object();
 
     public void robotInit() {
-        RobotMap.gyro.calibrate();
         //server = CameraServer.getInstance();
         //server.startAutomaticCapture("cam0", 0);
         UsbCamera server = CameraServer.getInstance().startAutomaticCapture("cam0", 0);
@@ -58,20 +54,7 @@ public class Robot extends IterativeRobot{
         driveTest = 0;
         shooter = new Shooter();
         drive = new MainDrive();
-        camera = new CameraMotion();
         SmartDashboard.putData("MainDrive", drive);
-        /*
-        processor = new GripPipeline();
-        visionThread = new VisionThread(camera, processor, pipeline -> {
-            if (!pipeline.filterContoursOutput().isEmpty()) {
-                Rect r = Imgproc.boundingRect(pipeline.filterContoursOutput().get(0));
-                synchronized (imgLock) {
-                    centerX = r.x + (r.width / 2);
-                }
-            }
-        });
-        visionThread.start();
-        */
         oi = new OI();
 
     }
