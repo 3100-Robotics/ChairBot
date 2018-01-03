@@ -6,16 +6,20 @@ import org.usfirst.frc.team3100.Robot;
 import org.usfirst.frc.team3100.RobotMap;
 import org.usfirst.frc.team3100.XBoxController;
 import org.usfirst.frc.team3100.subsystems.MainDrive;
+import static org.usfirst.frc.team3100.Robot.shooter;
 
-import java.sql.Time;
+/**
+ * Created by Aiden on 3/23/17.
+ */
+public class Auto extends Command {
 
-public class Drive extends Command {
-
-
-    public Drive(){
-        super("Drive");
+    public Auto() {
+        super("Auto");
         requires(Robot.drive);
+        requires(shooter);
+
     }
+
     private static MainDrive drive = Robot.drive;
     private static XBoxController controller = RobotMap.controls;
 
@@ -26,15 +30,7 @@ public class Drive extends Command {
 
     @Override
     protected void execute() {
-        if(Robot.autoVal == false) {
-            drive.drive(controller.getLeftStickY(), controller.getRightStickX());
-        } else {
-            drive.drive(1,0);
-            Timer.delay(2);
-            drive.drive(0,0);
-
-        }
-
+        shooter.shoot();
     }
 
 
@@ -52,3 +48,4 @@ public class Drive extends Command {
 
     }
 }
+

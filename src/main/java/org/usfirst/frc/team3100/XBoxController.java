@@ -20,7 +20,9 @@ public class XBoxController extends Joystick {
         public static final int rightTrigger = 2;
         public static final int leftTrigger = 3;
 
-        public XBoxController(int port) {
+        private static final int dPad = 0;
+
+    public XBoxController(int port) {
             super(port);
         }
 
@@ -72,4 +74,6 @@ public class XBoxController extends Joystick {
             return getRawAxis(leftTrigger);
 
     }
+
+
 }

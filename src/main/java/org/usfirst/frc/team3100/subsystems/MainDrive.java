@@ -12,6 +12,7 @@ import java.lang.Math;
 /**
  * Created by nicco on 2/14/17.
  */
+
 public class MainDrive extends PIDSubsystem {
 
     private SpeedController leftMotor = RobotMap.leftMotor;
@@ -27,30 +28,26 @@ public class MainDrive extends PIDSubsystem {
     static double setting = 0.0; //Need to remember the value instead of 0
 
     private double setHeading(double move, double rotate){
-
-
-
         if((Math.abs(move) < JOYSTIC_EPSILON) && (Math.abs(rotate) < JOYSTIC_EPSILON)){
             setting = gyro.getAngle();
         } else if (Math.abs(rotate) >= JOYSTIC_EPSILON) {
             setting = (setting + (rotate * ROTATE_COEFF));
         }
         return setting;
-
     }
 
 
     public MainDrive(){
 
 
-        super("MainDrive", 0.25,0,0);
+        super("MainDrive", 0,0,0);
         setOutputRange(-1,1);
         getPIDController().setContinuous();
         enable();
-        SmartDashboard.putNumber("P", getPIDController().getP());
-        SmartDashboard.putNumber("I", getPIDController().getI());
-        SmartDashboard.putNumber("D", getPIDController().getD());
-        SmartDashboard.putNumber("SetPoint", getSetpoint());
+        //SmartDashboard.putNumber("P", getPIDController().getP());
+        //SmartDashboard.putNumber("I", getPIDController().getI());
+        //SmartDashboard.putNumber("D", getPIDController().getD());
+        //SmartDashboard.putNumber("SetPoint", getSetpoint());
     }
 
     @Override
@@ -59,27 +56,29 @@ public class MainDrive extends PIDSubsystem {
     }
 
     protected double returnPIDInput() {
+
         SmartDashboard.putNumber("Gryo", gyro.getAngle());
         return gyro.getAngle();
     }
 
     protected void usePIDOutput(double output) {
         SmartDashboard.putNumber("PID Output", output);
-        mainDrive.arcadeDrive(targetMove, -output);
+        mainDrive.arcadeDrive(targetMove * -1, -targetRotate);
     }
-    public void drive(double move, double rotate) {
+    public void drive(double move , double rotate) {
         targetMove = move;
-        setSetpoint(setHeading(move, rotate));
+        targetRotate = rotate;
+        setSetpoint(setHeading(move , rotate));
 
         enable();
 
-        if (DEBUG) {
-            getPIDController().setPID(
-                SmartDashboard.getNumber("P"),
-                SmartDashboard.getNumber("I"),
-                SmartDashboard.getNumber("D")
-            );
-        }
+        //if (DEBUG) {
+        //    getPIDController().setPID(
+                //SmartDashboard.getNumber("P"),
+                //SmartDashboard.getNumber("I"),
+                //SmartDashboard.getNumber("D")
+        //    );
+        //}
         SmartDashboard.putNumber("P", getPIDController().getP());
         SmartDashboard.putNumber("I", getPIDController().getI());
         SmartDashboard.putNumber("D", getPIDController().getD());

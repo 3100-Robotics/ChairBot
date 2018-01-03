@@ -3,7 +3,72 @@ Template file for classes using GradleRIO
 @author Jaci
 */
 
-buildscript {
+
+plugins {
+    id "java"
+    id "eclipse"
+    id "idea"
+    id "jaci.openrio.gradle.GradleRIO" version "2017.11.17"
+}
+/*
+frc {
+    team = "3100"
+    robotClass = "org.usfirst.frc.team3100.Robot"
+    rioHost = "roboRIO-3100-frc.local"
+    rioIP = "172.22.11.2"
+}
+*/
+deploy {
+    targets {
+        target("roborio", jaci.openrio.gradle.frc.RoboRIO) {
+            team = 3100
+        }
+    }
+    artifacts {
+        artifact('frcJava', jaci.openrio.gradle.frc.FRCJavaArtifact) {
+            targets << "roborio"
+        }
+    }
+}
+
+dependencies {
+    compile files()
+    compile wpilib()
+    //compile talonSrx()
+    //"/Users/Aiden/wpilib/java/current/lib/niVisionWPI.jar"
+}
+
+def robotManifest = {
+    attributes 'Main-Class': 'edu.wpi.first.wpilibj.RobotBase'
+    attributes 'Robot-Class': "org.usfirst.frc.team3100.Robot"
+}
+
+jar {
+    from configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    manifest robotManifest
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.2.1'
+}
+
+allprojects {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xlint:deprecation"
+    }
+}
+task genJavadoc(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+
+artifacts {
+    archives genJavadoc
+
+}
+
+
+/*buildscript {
   repositories {
 	mavenCentral()
 	maven {
@@ -43,3 +108,4 @@ task genJavadoc(type: Jar, dependsOn: javadoc) {
 artifacts {
   archives genJavadoc
 }
+*/
